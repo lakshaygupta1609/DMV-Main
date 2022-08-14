@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block title %}Traffic Laws and Amendments{% endblock title %} 
+{% block body %}
+<br />
+<section>
+  <div class="container-lg">
+    <br />
+
+    {% if laws %}
+    <h1 style="text-align: center">Official Traffic Laws and Amendments</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Law Name</th>
+          <th scope="col">Date of issue</th>
+          <th scope="col">PDF Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for law in laws %}
+
+        <tr>
+          <!-- <th scope="row">3</th> -->
+          <td>{{law.law_name}}</td>
+          <td>{{ law.law_date }}</td>
+          <td><a href="{{law.pdf_link}}">View</a></td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% endif %}
+  </div>
+</section>
+{% endblock body%}

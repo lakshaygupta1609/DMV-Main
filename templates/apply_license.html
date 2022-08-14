@@ -1,0 +1,58 @@
+{% extends 'base.html' %} 
+{% block title %}Apply for a license{% endblock title%} 
+{% block body %}
+<br />
+<section>
+  <div class="container-lg">
+    <h1 style="text-align: center">Apply for a license</h1>
+    <br />
+
+    <form action="/apply_license" method="POST">
+      {% csrf_token %} Select the type of license you want to apply for:
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="license_type"
+        id="select_query"
+      >
+        <option value="Learner">Learner</option>
+        <option value="Two-Wheeler">Two-Wheeler</option>
+        <option value="Four-Wheeler">Four-Wheeler</option>
+      </select>
+      <br />
+
+      {% if exams %} Select date and time of examination:
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="exam_datetime"
+        id="select_query"
+      >
+        {% for exam in exams %}
+        <option value="{{exam.exam_date}} + {{exam.exam_time}}">
+          {{exam.exam_date}} {{exam.exam_time}}
+        </option>
+        {% endfor%}
+      </select>
+      <br />
+
+      Select location of examination:
+      <select
+        class="form-select"
+        aria-label="Default select example"
+        name="location"
+        id="select_query_1"
+      >
+        {% for exam in exams %}
+        <option value="{{ exam.location }}">{{exam.location}}</option>
+        {% endfor%}
+      </select>
+
+      {%endif%}
+      <br />
+
+      <button type="submit" class="btn btn-dark mb-3">Submit</button>
+    </form>
+  </div>
+</section>
+{% endblock body%}

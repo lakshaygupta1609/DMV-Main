@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    /> 
+
+    {% load static %} <link rel="stylesheet" href={% static 'base.css'%}>
+
+    <title>{% block title %}{% endblock title %}</title>
+    
+  </head>
+  <body>
+    <!--Navigation bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <img
+            src="https://presentations.gov.in/wp-content/uploads/2020/01/NE_Preview1.png?x74705"
+            width="50"
+            height="50"
+          />
+          DMV Management System
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/"
+                >Homepage</a
+              >
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/about"
+                >About</a
+              >
+            </li>
+          </ul>
+
+
+          {% if user.is_authenticated %}
+            <h5 style="color: white">Welcome, {{ user.first_name }}!</h5> 
+            &nbsp; &nbsp;
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/user_logout">Log out</a>
+          {% else %}
+          <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#loginModal">Log in</button>
+          &nbsp;
+          <button class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+          {% endif %}
+          
+        </div>
+      </div>
+    </nav>
+
+<!--Alert-->
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+    {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-lg">
+   
+    <form action="/user_login" method="POST">
+    {% csrf_token %}
+     <div class="form-floating">
+      <input
+        class="form-control"
+        id="floatingInput"
+        placeholder="Email Address"
+        name="email"
+      />
+      <label for="floatingInput">Email Address</label>
+    </div>
+    <br>
+    <div class="form-floating">
+      <input
+        type="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Password"
+        name="password"
+      />
+      <label for="floatingPassword">Password</label>
+    </div>
+    <br>
+        <button type="submit" class="btn btn-dark mb-3">Log in</button>
+    </form>
+  </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-lg">
+    <form action="/register" method="POST">
+    {% csrf_token %}
+    <div class="form-floating">
+        <input
+          class="form-control"
+          id="floatingInput"
+          placeholder="Name"
+          name="first_name"
+        />
+        <label for="floatingInput">First Name</label>
+      </div>
+      <br>
+      <div class="form-floating">
+        <input
+          class="form-control"
+          id="floatingInput"
+          placeholder="Name"
+          name="last_name"
+        />
+        <label for="floatingInput">Last Name</label>
+      </div>
+      <br>
+      <div class="form-floating">
+        <input
+          class="form-control"
+          id="floatingInput"
+          placeholder="Citizenship No."
+          name="citizenship"
+        />
+        <label for="floatingInput">Citizenship No.</label>
+      </div>
+      <br />
+      <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Email address"
+          name="email"
+        />
+        <label for="floatingInput">Email address</label>
+      </div>
+      <br />
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          name="password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <br />
+
+      <button type="submit" class="btn btn-dark mb-3">Register</button>
+    </form>
+  </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% block body%}{% endblock body%}
+    
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

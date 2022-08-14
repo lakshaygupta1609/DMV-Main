@@ -1,0 +1,42 @@
+{% extends 'base.html' %} 
+{% block title %}Check your license(s){% endblock title %} 
+{% block body %}
+<br />
+<section>
+  <div class="container-lg">
+    <br />
+
+    {% if licenses %}
+    <h1 style="text-align: center">
+      View all the license(s) registered under your citizenship number:
+    </h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Liscence type</th>
+          <th scope="col">Expiry Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for license in licenses %}
+
+        <tr>
+          <!-- <th scope="row">3</th> -->
+          <td>{{user.first_name}} {{user.last_name}}</td>
+          <td>{{ user.profile.citizenship }}</td>
+          <td>{{ license.license_type }}</td>
+          <td>{{license.expiry_date}}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+    {%else%}
+    <h1 style="text-align: center">You have no licenses!</h1>
+
+    {% endif %}
+  </div>
+</section>
+{% endblock body%}

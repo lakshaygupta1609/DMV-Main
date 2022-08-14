@@ -1,0 +1,52 @@
+{% extends 'base.html' %} 
+{% block title %}Contact Us{% endblock title %} 
+{% block body %}
+<br>
+<section>
+      
+  <div class="container-lg">
+  <h1 style="text-align:center">Contact Us</h1>
+  <br>
+
+    <form action="/contact" method="POST">
+    {% csrf_token %}
+
+    <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Email address"
+          name="email"
+        />
+        <label for="floatingInput">Email address</label>
+        <br>
+        <div class="form-floating">
+        <input
+          class="form-control"
+          id="floatingInput"
+          placeholder="Title"
+          name="title"
+        />
+        <label for="floatingInput">Title of Message</label>
+        <br>
+      Select the type of request:
+    <select class="form-select" aria-label="Default select example" name="support_type" id="select_query">
+  <option value="Help">Help</option>
+  <option value="Suggestion">Suggestion</option>
+  <option value="Complaint">Complaint</option>
+  <option value="Other">Other</option>
+</select>
+<br>
+
+     <div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Describe the situation. How can we help?</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc"></textarea>
+</div>
+     
+    <br>
+        <button type="submit" class="btn btn-dark mb-3">Submit</button>
+    </form>
+  </div>
+</section>
+{% endblock body%}

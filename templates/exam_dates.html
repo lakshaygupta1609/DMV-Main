@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+{% block title %}License examination dates{% endblock title %} 
+{% block body %}
+<br />
+<section>
+  <div class="container-lg">
+    <br />
+
+    {% if exams %}
+    <h1 style="text-align: center">Upcoming license examination dates:</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Branch Name</th>
+          <th scope="col">Location</th>
+          <th scope="col">Test date</th>
+          <th scope="col">Test time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exam in exams %}
+
+        <tr>
+          <!-- <th scope="row">3</th> -->
+          <td>{{exam.branch_name}}</td>
+          <td>{{ exam.location }}</td>
+          <td>{{exam.exam_date}}</td>
+          <td>{{exam.exam_time}}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% endif %}
+  </div>
+</section>
+{% endblock body%}
